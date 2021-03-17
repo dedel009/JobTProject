@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+
 <html>
 <head>
 <meta charset="UTF-8">
@@ -33,14 +34,24 @@
 	    </div>
 	  </nav>
 	</c:if>
+	
 	<c:if test="${sessionScope.id != null }">
-      <nav>
+	<nav class="navbar navbar-light bg-light static-top">
+	    <div class="container">
+          <a href="main"><img src="/JobTProject/img/logo.png" alt="" style="width:200px;"></a>
           <div>
-              <a href="main"><img src="/JobTProject/img/logo.png" alt="" style="width:200px;"></a>
-              <a href="board">게시판</a>
-              <a href="user/logout">로그아웃</a>
-          </div>
-      </nav>        
+	      	  <a class="navbar-brand" href="board">게시판</a>
+		      <a class="btn btn-primary" href="user/logout">로그아웃</a>
+	      </div>
+	    </div>
+	  </nav>       
 	</c:if>
+	<script type="text/javascript">
+    if (self.name != 'reload') {
+        self.name = 'reload';
+        self.location.reload(true);
+    }
+    else self.name = ''; 
+	</script>
 </body>
 </html>

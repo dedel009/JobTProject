@@ -15,17 +15,19 @@ import com.jobT.web.connection.jdbcUtil;
 
 public class jobtService {
 	private static jobtService instance = new jobtService();
-	private Connection conn = null;
-	private PreparedStatement psmt = null;
-	private ResultSet rs = null;
+
 
 	public static jobtService getInstance() {
 		return instance;
 	}
-
+	
+	
 	// 회원가입 관련 메소드
 	public int createMember(member member) {
 		int result = 0;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
 		try {
 			String sql = "insert into member(id, password, name, nickname) values(?, ?, ?, ?)";
 			conn = ConnectionProvider.getConnection();
@@ -49,7 +51,11 @@ public class jobtService {
 	
 	public int idCheck(String id) { // id 중복체크
 		int result = 0;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
 		try {
+
 			String sql = "select count(id) as count from member where id=?";
 			conn = ConnectionProvider.getConnection();
 			psmt = conn.prepareStatement(sql);
@@ -73,6 +79,9 @@ public class jobtService {
 	// update 관련 메소드
 	public int detailUpdate(String title, String content, String num) {
 		int result = 0;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
 		try {
 			String sql = "update board set title=?, content=? where num = ?";
 			conn = ConnectionProvider.getConnection();
@@ -95,6 +104,9 @@ public class jobtService {
 	// delete 관련 메소드
 	public int detailDelete(String num) {
 		int result = 0;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
 		try {
 			String sql = "update board set flag = 'F' where num = ?";
 			conn = ConnectionProvider.getConnection();
@@ -114,7 +126,9 @@ public class jobtService {
 	// detail 관련 메소드
 	public board getDetail(String num) {
 		board board = null;
-
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
 		try {
 			String sql = "select * from board where num = ?";
 			conn = ConnectionProvider.getConnection();
@@ -147,6 +161,9 @@ public class jobtService {
 	public int insertList(String title, String content, String nickname) {
 
 		int result = 0;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
 		try {
 			String sql = "insert into board (title, content, nickname) values(?, ?, ?)";
 			conn = ConnectionProvider.getConnection();
@@ -169,6 +186,9 @@ public class jobtService {
 	// login 관련 메소드
 	public String getNickname(String id) { // 세션에 등록할 nickname 가져오는 메소드
 		String nickname = "";
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
 		try {
 			String sql = "select nickname from member where id = ?";
 			conn = ConnectionProvider.getConnection();
@@ -192,6 +212,9 @@ public class jobtService {
 	}
 
 	public int login(String id, String pass) {
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
 		try {
 			String sql = "select password from member where id = ?";
 			conn = ConnectionProvider.getConnection();
@@ -219,12 +242,29 @@ public class jobtService {
 	}
 
 	// board관련 메소드
-	public List<board> getList() {
+	public List<board> getList(int page) {
 		List<board> list = new ArrayList<board>();
-		String sql = "select * from board where flag ='Y'";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		int start = 1 + (page - 1) * 10; // 1 6 11 16 ....
+		int end = page * 10; // 5 10 15 20 .....
+		
 		try {
+			 String sql = "select num.* "
+						+ "	 from (select @rownum:=@rownum+1 as seq, n.*"
+						+ "			 from(select * "
+						+ "					From board "
+						+ "				   where flag='Y')n) num, "
+						+ "               (select @rownum:=0)tmp "
+						+ "	 Where num.seq between ? and ? " ;
+			 
 			conn = ConnectionProvider.getConnection();
 			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, start);
+			psmt.setInt(2, end);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				int num = rs.getInt("NUM");
@@ -245,5 +285,27 @@ public class jobtService {
 		}
 		return list;
 	}
+	public int getCount() {
+		int count = 0;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "select count(NUM) as count from board where flag = 'Y'";
+			conn = ConnectionProvider.getConnection();
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt("count");
+			}
 
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcUtil.close(psmt);
+			jdbcUtil.close(conn);
+			jdbcUtil.close(rs);
+		}
+		return count;
+	}
 }

@@ -19,8 +19,18 @@ public class boardController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		
-		List<board> list = jobtService.getInstance().getList();
+		String page_ = req.getParameter("p");
+		int page  = 1;
 		
+		if(page_!=null&&!page_.equals("")){
+			page = Integer.parseInt(page_);
+		}
+		System.out.println(page);
+		List<board> list = jobtService.getInstance().getList(page);
+		
+		int count = jobtService.getInstance().getCount();
+		
+		req.setAttribute("count", count);
 		req.setAttribute("list", list);
 		req.getRequestDispatcher("/WEB-INF/view/board.jsp").forward(req, res);
 	}

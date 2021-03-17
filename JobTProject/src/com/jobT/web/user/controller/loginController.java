@@ -48,7 +48,7 @@ public class loginController extends HttpServlet {
 			HttpSession session = req.getSession(true);	//세션 생성
 			session.setAttribute("id", id);	//세션에 id 값 저장
 			session.setAttribute("nickname", nickname);
-			out.println("<script>alert('로그인 성공!'); location.href='/JobTProject/board';</script>");
+			out.println("<script>alert('로그인 성공!'); history.go(-2);</script>");
 		}else if(result ==0) {
 			out.println("<script>alert('비밀번호가 맞지 않습니다!'); history.back();</script>");
 		}else if(result == -1) {

@@ -19,8 +19,10 @@ window.onload = function() {
 function idSubmit() {
     const var1 = document.querySelector(".id").value;
     if(var1==null || var1==""){
-        document.querySelector(".p1").style.display = "none";   	
+        document.querySelector(".p1").style.display = "none";          	
         document.querySelector(".nono1").style.display = "block";
+       
+        
     }else{
         const form = document.querySelector(".form");
         form.action = "idCheck";
