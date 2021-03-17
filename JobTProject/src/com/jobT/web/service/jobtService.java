@@ -1,7 +1,6 @@
 package com.jobT.web.service;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -81,7 +80,6 @@ public class jobtService {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement psmt = null;
-		ResultSet rs = null;
 		try {
 			String sql = "update board set title=?, content=? where num = ?";
 			conn = ConnectionProvider.getConnection();
@@ -106,7 +104,6 @@ public class jobtService {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement psmt = null;
-		ResultSet rs = null;
 		try {
 			String sql = "update board set flag = 'F' where num = ?";
 			conn = ConnectionProvider.getConnection();
@@ -163,7 +160,7 @@ public class jobtService {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement psmt = null;
-		ResultSet rs = null;
+
 		try {
 			String sql = "insert into board (title, content, nickname) values(?, ?, ?)";
 			conn = ConnectionProvider.getConnection();
@@ -249,22 +246,27 @@ public class jobtService {
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 
-		int start = 1 + (page - 1) * 10; // 1 6 11 16 ....
-		int end = page * 10; // 5 10 15 20 .....
+		int start = 0 + (page - 1) * 7; //0 7 14 
+//		int end = page * 7; // 5 10 15 20 .....
 		
 		try {
-			 String sql = "select num.* "
-						+ "	 from (select @rownum:=@rownum+1 as seq, n.*"
-						+ "			 from(select * "
-						+ "					From board "
-						+ "				   where flag='Y')n) num, "
-						+ "               (select @rownum:=0)tmp "
-						+ "	 Where num.seq between ? and ? " ;
-			 
+//			 String sql ="	Select * "
+//			 			+ "		from (Select @rownum:=@rownum+1 as seq , n.* "
+//			 			+ "			from(select * from board where flag='Y' order by regdate desc)n "
+//			 			+ "		        Where (@rownum:=0)=0)ns "
+//			 			+ "                Where ns.seq between 1 and 10";
+			
+			String sql  = "	select * "
+						+ "				 from (select (@rownum := @rownum + 1)seq, board.* "
+						+ "					 from(select * from board "
+						+ "						   where flag='Y'"
+						+ "						   order by regdate desc)board)rnum,"
+						+ "                           (select @rownum := 0)tmp"
+						+ "							 limit ?, 7";
 			conn = ConnectionProvider.getConnection();
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, start);
-			psmt.setInt(2, end);
+//			psmt.setInt(2, end);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				int num = rs.getInt("NUM");
