@@ -23,10 +23,10 @@
                                             <th>닉네임 : ${sessionScope.nickname}</th>
                                         </tr>
                                         <tr>
-                                        	<td colspan="2"><input type="text" name="title" style="border:none; width:100%;"/></td>
+                                        	<td colspan="2"><input type="text" name="title" placeholder="제목을 입력해주세요." style="border:none; width:100%;" required/></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2"><textarea  name="content" style="border:none; width:100%;"></textarea></td>
+                                            <td colspan="2"><textarea  name="content" placeholder="내용을 입력해주세요." style="border:none; width:100%;" required></textarea></td>
                                         </tr>
 	                                </table>
 	                                <input type="submit" value="글쓰기" style="float:right;">

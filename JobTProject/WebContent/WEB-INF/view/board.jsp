@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>게시판</title>
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
 </head>
 <body>
 	<jsp:include page="../view/layout/nav.jsp"/>
@@ -40,15 +41,25 @@
 										</c:forEach>
                                     </tbody>
                                 </table>
+	                            <div style="width:100%; text-align: center;">
+	                            	<form action="?p=${empty param.p?1:param.p}" method="post">
+		                            	<select name="field">
+		                            		<option ${(param.field=="title")?"selected":""} value="title">제목</option>
+		                            		<option ${(param.field=="nickname")?"selected":""} value="nickname">닉네임</option>
+		                            	</select>
+		                            	<input type="text" name="query" value="${param.query}" />
+		                            	<input type="submit" value="검색">
+	                            	</form>
+	                            </div>
                                 <c:if test="${not empty sessionScope.id}">
-									<a href="insert?n=${sessionScope.nickname}" style="border:1px solid gainsboro; color: gray; border-radius: 10px;padding: 10px;">추가</a>	
+									<a href="insert?n=${sessionScope.nickname}" style="border:1px solid gainsboro; color: gray; border-radius: 10px;padding: 10px;">글쓰기</a>	
 								</c:if>
 								<!-- 페이징 처리 -->	
-								<c:set var="page" value="${empty param?1:param.p}"></c:set>	
-								<c:set var="startNum" value="${page-(page-1)%5}"></c:set>
+								<c:set var="p" value="${empty param?1:param.p}"></c:set>	
+								<c:set var="startNum" value="${p-(p-1)%5}"></c:set>
 								<c:set var="lastNum" value="${fn:substringBefore(Math.ceil(count/7), '.')}"></c:set>
 								<hr style="clear: both; border:none;">
-								<div style="width:200px;text-align: center; margin:0 auto;">
+								<div style="width:215px;text-align: center; margin:0 auto;">
 									<!-- 이전 -->
 									<c:if test="${startNum > 1}">
 										<div style="float:left;">
@@ -56,23 +67,20 @@
 										</div>
 									</c:if>
 									<c:if test="${startNum <= 1}">
-										<div style="float:left;">
-											<a href="#" onclick="alert('first page')">이전</a>
-										</div>										
+										
 									</c:if>				
 									
-									<c:forEach var="page" begin="0" end="${lastNum-1}">
-									<div style="float:left; margin:0px 10px 0px 10px;">
-										<a href="?p=${startNum+page}">${startNum+page }</a>
-									</div>
+									<c:forEach var="page" begin="0" end="4">
+										<c:if test="${page<lastNum}">
+											<div style="float:left; margin:0px 10px 0px 10px;">
+												<a href="?p=${startNum+page}&query=${param.query}&field=${param.field}" class="page_a">${startNum+page }</a>
+											</div>
+										</c:if>
 									</c:forEach>
-
 									
 									<!-- 다음 -->
 									<c:if test="${startNum+5 > lastNum}">
-										<div style="float:left;">
-											<a href="#" onclick="alert('last page')">다음</a>
-										</div>
+
 									</c:if>
 									<c:if test="${startNum+5 <= lastNum}">
 										<div style="float:left;">

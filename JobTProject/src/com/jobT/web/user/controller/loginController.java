@@ -29,8 +29,7 @@ public class loginController extends HttpServlet {
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-//		req.setCharacterEncoding("UTF-8");
-//		res.setContentType("text/html; charset=UTF-8");		//한글 깨짐 방지 코드
+
 		
 		String id = req.getParameter("id");
 		String pass = req.getParameter("password");

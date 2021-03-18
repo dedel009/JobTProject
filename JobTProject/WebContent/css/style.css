@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.page_a:hover{
+	background-color: buttonshadow;
+	border-radius:10px;
+	font-weight: bold;
+	text-decoration: none;
+}
+
