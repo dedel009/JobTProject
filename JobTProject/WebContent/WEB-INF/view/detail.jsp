@@ -17,7 +17,7 @@
                             <h6 class="m-0 font-weight-bold text-primary">상세</h6>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive" style="overflow:none; ">
+                            <div class="table-responsive" style="overflow:inherit;">
                             	<form action="detail" method="post">
 	                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 	                                    <thead>

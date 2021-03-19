@@ -36,8 +36,10 @@
 	  <!-- Navigation -->
 	  <nav class="navbar navbar-light bg-light static-top">
 	    <div class="container">
-          <a href="main" class="main_logo"><img src="/JobTProject/img/logo.png" alt="" style="width:200px;"></a>
+          <a href="main" class="main_logo"><img src="/JobTProject/img/logo.png" alt="" style="width:180px;"></a>
           <div>
+  	      	  <a class="navbar-brand" href="#">공지사항</a> 
+  	      	  <a class="navbar-brand" href="#">공지사항</a>           
   	      	  <a class="navbar-brand" href="#">공지사항</a>        
 	      	  <a class="navbar-brand" href="board">자유게시판</a>
 		      <a class="btn btn-primary" href="user/login">로그인</a>
@@ -50,7 +52,7 @@
 	<c:if test="${sessionScope.id != null }">
 	<nav class="navbar navbar-light bg-light static-top">
 	    <div class="container">
-          <a href="main"><img src="/JobTProject/img/logo.png" alt="" style="width:200px;"></a>
+          <a href="main"><img src="/JobTProject/img/logo.png" alt="" style="width:180px;"></a>
           <div>
   	      	  <a class="navbar-brand" href="#">공지사항</a> 
 	      	  <a class="navbar-brand" href="board">자유게시판</a>
