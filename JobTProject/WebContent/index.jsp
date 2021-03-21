@@ -27,33 +27,59 @@
 		background-color: buttonhighlight;
 		border-radius:20px;		
 	}
+	nav{
+		background-color: lavender;
+	}
   </style>
 </head>
 <body>
 	<div class="wrap">
 		<!-- Navigation -->
-		<nav class="navbar navbar-light bg-light static-top" style="z-index: 80; position: fixed; width:100%;  opacity: 70%;">
-			<div class="container">
-				<a href="main" class="main_logo"><img
-					src="/JobTProject/img/logo.png" alt="" style="width: 180px;"></a>
-				<div>
-					<a class="navbar-brand" href="#">공지사항</a> <a class="navbar-brand"
-						href="board">자유게시판</a> <a class="btn btn-primary"
-						href="user/login">로그인</a> <a class="btn btn-primary"
-						href="user/signup">회원가입</a>
-				</div>
-			</div>
-		</nav>	
+				<c:if test="${sessionScope.id == null }">
+					<!-- Navigation -->
+					<nav class="navbar navbar-light static-top bg-light" style="z-index: 80; position: fixed; width:100%;  opacity: 70%;">
+						<div class="container">
+							<a href="main" class="main_logo"><img
+								src="/JobTProject/img/logo.png" alt="" style="width: 180px;"></a>
+							<div>
+								<a class="navbar-brand" href="#" onclick="fnMove('impormation')">설명</a> 
+								<a class="navbar-brand" href="#" onclick="fnMove('picture')">그림</a>
+								<a class="navbar-brand" href="#">공지사항</a> 
+								<a class="navbar-brand" href="board">자유게시판</a> 
+								<a class="btn btn-primary" href="user/login">로그인</a> 
+								<a class="btn btn-primary" href="user/signup">회원가입</a>
+							</div>
+						</div>
+					</nav>	
+				</c:if>
+				<c:if test="${sessionScope.id != null }">
+					<nav class="navbar navbar-light static-top bg-light" style="z-index: 80; position: fixed; width:100%;  opacity: 70%;">
+						<div class="container">
+							<a href="main"><img src="/JobTProject/img/logo.png" alt=""
+								style="width: 180px;" class="main_logo"></a>
+							<div>
+								<a class="navbar-brand" href="#" onclick="fnMove('impormation')">설명</a> 
+								<a class="navbar-brand" href="#" onclick="fnMove('picture')">그림</a>
+								<a class="navbar-brand" href="#">공지사항</a> <a class="navbar-brand"
+									href="board">자유게시판</a> <a class="btn btn-primary"
+									href="user/logout">로그아웃</a>
+							</div>
+						</div>
+					</nav>
+				</c:if>
+
 		<!-- Masthead -->
 		<header class="masthead text-white text-center" style="padding-top: 20rem;padding-bottom: 20rem; transition: top 0.2s ease-in-out;">
 			<div class="overlay" style="background: url('img/connect.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center; opacity : 100%;">
 				<c:if test="${sessionScope.id == null }">
 					<!-- Navigation -->
-					<nav class="navbar navbar-light bg-light static-top hideme" style="z-index: 100; position: fixed; width:100%;  opacity: 100%;">
+					<nav class="navbar navbar-ligh static-top hideme" style="z-index: 100; position: fixed; width:100%;  opacity: 100%; display:none;">
 						<div class="container">
 							<a href="main" class="main_logo"><img
 								src="/JobTProject/img/logo.png" alt="" style="width: 180px;"></a>
 							<div>
+								<a class="navbar-brand" href="#" onclick="fnMove('impormation')">설명</a> 
+								<a class="navbar-brand" href="#" onclick="fnMove('picture')">그림</a>
 								<a class="navbar-brand" href="#">공지사항</a> <a class="navbar-brand"
 									href="board">자유게시판</a> <a class="btn btn-primary"
 									href="user/login">로그인</a> <a class="btn btn-primary"
@@ -63,11 +89,13 @@
 					</nav>
 				</c:if>
 				<c:if test="${sessionScope.id != null }">
-					<nav class="navbar navbar-light bg-light static-top" style="z-index: 100; position: fixed; opacity: 100%;width:100%">
+					<nav class="navbar navbar-light static-top hideme" style="z-index: 100; position: fixed; width:100%;  opacity: 100%; display:none;">
 						<div class="container">
 							<a href="main"><img src="/JobTProject/img/logo.png" alt=""
-								style="width: 180px;"></a>
+								style="width: 180px;" class="main_logo"></a>
 							<div>
+								<a class="navbar-brand" href="#" onclick="fnMove('impormation')">설명</a> 
+								<a class="navbar-brand" href="#" onclick="fnMove('picture')">그림</a>
 								<a class="navbar-brand" href="#">공지사항</a> <a class="navbar-brand"
 									href="board">자유게시판</a> <a class="btn btn-primary"
 									href="user/logout">로그아웃</a>
@@ -89,7 +117,7 @@
 		</header>
 		<!-- Icons Grid -->
 		<section class="features-icons bg-light text-center">
-			<div class="container">
+			<div class="container impormation">
 				<div class="row">
 					<div class="col-lg-4">
 						<div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
@@ -126,10 +154,10 @@
 		</section>
 		<!-- Image Showcases -->
 		<section class="showcase">
-			<div class="container-fluid p-0">
+			<div class="container-fluid p-0 ">
 				<div class="row no-gutters">
 
-					<div class="col-lg-6 order-lg-2 text-white showcase-img"
+					<div class="col-lg-6 order-lg-2 text-white showcase-img picture"
 						style="background-image: url('img/where.jpg'); background-position: center;"></div>
 					<div class="col-lg-6 order-lg-1 my-auto showcase-text">
 						<h2>어디서든</h2>
@@ -168,23 +196,6 @@
 	<!-- Bootstrap core JavaScript -->
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script type="text/javascript">
-		window.onload = function() {
-			if (self.name != 'reload') {
-				self.name = 'reload';
-				self.location.reload(true);
-			} else
-				self.name = '';
-
-            $(window).scroll(function() {                
-                if($(this).scrollTop()>0){
-                	$(".hideme").fadeIn();
-                }else{
-                	$('.hideme').fadeOut();
-                }
-            });
-        }
-	</script>
+	<script src="js/user/index.js"></script>
 </body>
 </html>
