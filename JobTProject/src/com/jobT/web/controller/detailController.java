@@ -21,11 +21,9 @@ public class detailController extends HttpServlet{
 		res.setContentType("text/html; charset=UTF-8");
 		
 		String num = req.getParameter("num");
-//		System.out.println("num: "+num);
 		session.setAttribute("num", num);
 		
-		jobtService js = jobtService.getInstance();
-		board board = js.getDetail(num);
+		board board = jobtService.getInstance().getDetail(num);
 		
 		req.setAttribute("board", board);
 		req.getRequestDispatcher("/WEB-INF/view/detail.jsp").forward(req, res);
@@ -39,13 +37,12 @@ public class detailController extends HttpServlet{
 
 		String cmd = req.getParameter("cmd");
 		String num = (String)session.getAttribute("num");
-		jobtService js = jobtService.getInstance();
 		switch(cmd) {
 		case "수정":
 			out.println("<script>location.href='update';</script>");
 			break;
 		case "삭제":
-			int result = js.detailDelete(num);
+			int result = jobtService.getInstance().detailDelete(num);
 			if(result==1) {
 				out.println("<script>alert('삭제성공!'); location.href='board';</script>");
 			}else {

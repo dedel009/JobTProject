@@ -35,5 +35,6 @@
 		</li>
 		</c:forEach>
 	</ul>
+	<a href="../main">메인으로</a>
 </body>
 </html>

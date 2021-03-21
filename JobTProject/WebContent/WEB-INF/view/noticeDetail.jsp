@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>세부 자유게시판</title>
+<title>세부 공지사항</title>
 </head>
 <body>
 	<jsp:include page="../view/layout/nav.jsp"/>
@@ -18,7 +18,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive" style="overflow:inherit;">
-                            	<form action="detail" method="post">
+                            	<form action="noticeDetail" method="post">
 	                                <table class="table table-bordered" id="dataTable">
 	                                    <thead>
 	                                        <tr>
@@ -30,14 +30,14 @@
 	                                    </thead>
 	                                    <tbody>
 											<tr>
-												<td>${board.num}</td>
-												<td>${board.title }</td>
-												<td>${board.content }</td>
-												<td>${board.nickname }</td>
+												<td>${nt.num}</td>
+												<td>${nt.title }</td>
+												<td>${nt.content }</td>
+												<td>${nt.nickname }</td>
 											</tr>
 	                                    </tbody>
 	                                </table>
-		     						<c:if test="${sessionScope.nickname == board.nickname}">
+		     						<c:if test="${sessionScope.nickname == nt.nickname}">
 									<div style="float:right">
 										<input type="submit" value="수정" name="cmd"/>
 										<input type="submit" value="삭제" name="cmd"/>

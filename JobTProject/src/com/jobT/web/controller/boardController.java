@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.jobT.web.DTO.notice;
 import com.jobT.web.DTO.board;
 import com.jobT.web.service.jobtService;
 
@@ -25,7 +26,7 @@ public class boardController extends HttpServlet {
 		int count = 0;
 		List<board> list = null;
 		int page = 1;
-		
+		String tag = "board";
 		String page_ = req.getParameter("p");
 		String field = req.getParameter("field");
 		String query = req.getParameter("query");
@@ -46,6 +47,9 @@ public class boardController extends HttpServlet {
 				count = jobtService.getInstance().getCount();
 			}
 		}
+		List<notice> nlist = jobtService.getInstance().getBoardNoticeList(tag);
+		
+		req.setAttribute("nlist", nlist);
 		req.setAttribute("count", count);
 		req.setAttribute("list", list);
 		req.getRequestDispatcher("/WEB-INF/view/board.jsp").forward(req, res);

@@ -6,9 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시판</title>
-<link href="css/sb-admin-2.min.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
+<title>공지사항</title>
 </head>
 <body>
 	<jsp:include page="../view/layout/nav.jsp"/>
@@ -31,18 +29,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-								      	<c:forEach var="list" items="${nlist}">
+								      	<c:forEach var="list" items="${list}">
 											<tr>
 												<td>📌공지</td>
 												<td><a href="noticeDetail?num=${list.num}">${list.title }</a></td>
-												<td>${list.regdate }</td>
-												<td>${list.nickname }</td>
-											</tr>
-										</c:forEach>
-								      	<c:forEach var="list" items="${list}">
-											<tr>
-												<td>${list.num}</td>
-												<td><a href="detail?num=${list.num}">${list.title }</a></td>
 												<td>${list.regdate }</td>
 												<td>${list.nickname }</td>
 											</tr>
@@ -101,6 +91,6 @@
                     </div>
                 </div>
                 <!-- /.container-fluid -->	
-	<jsp:include page="../view/layout/footer.jsp"/>
+	<jsp:include page="../view/layout/footer.jsp"/>	
 </body>
 </html>

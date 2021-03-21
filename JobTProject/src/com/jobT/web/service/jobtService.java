@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.jobT.web.DTO.board;
 import com.jobT.web.DTO.member;
+import com.jobT.web.DTO.notice;
 import com.jobT.web.connection.ConnectionProvider;
 import com.jobT.web.connection.jdbcUtil;
 
@@ -429,4 +430,149 @@ public class jobtService {
 		}
 		return count;
 	}
+	public List<notice> getBoardNoticeList(String tag_name) {
+		List<notice> list = new ArrayList<notice>();
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			String sql = "select * from notice where tag like ?";
+			
+			conn = ConnectionProvider.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, "%"+tag_name+"%");
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				int num = rs.getInt("NUM");
+				String title = rs.getString("TITLE");
+				String content = rs.getString("CONTENT");
+				Date regdate = rs.getTimestamp("REGDATE");
+				String nickname = rs.getString("NICKNAME");
+				String tag = rs.getString("TAG");
+
+				notice nt = new notice(num, title, content, regdate, nickname, tag);
+				list.add(nt);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcUtil.close(rs);
+			jdbcUtil.close(psmt);
+			jdbcUtil.close(conn);
+		}
+		return list;
+	}
+	
+	
+	//notice 관련 메소드
+	public List<notice> getNoticeList(int page) {
+		List<notice> list = new ArrayList<notice>();
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		int start = 1 + (page - 1) * 7; //0 7 14 
+		int end = page * 7; // 5 10 15 20 .....
+		
+		try {
+			
+			String sql = "select ns.*"
+							+ "				 from (select @rownum:=@rownum+1 as seq , n.*"
+							+ "						 from(select @rownum:=0)tmp,"
+							+ "                         (select * "
+							+ "						From notice "
+							+ "						   where flag='Y')n)ns "
+							+ "				Where ns.seq between ? and ?";
+			
+			conn = ConnectionProvider.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, start);
+			psmt.setInt(2, end);
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				int num = rs.getInt("NUM");
+				String title = rs.getString("TITLE");
+				String content = rs.getString("CONTENT");
+				Date regdate = rs.getTimestamp("REGDATE");
+				String nickname = rs.getString("NICKNAME");
+				String tag = rs.getString("TAG");
+
+				notice nt = new notice(num, title, content, regdate, nickname, tag);
+				list.add(nt);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcUtil.close(rs);
+			jdbcUtil.close(psmt);
+			jdbcUtil.close(conn);
+		}
+		return list;
+	}	
+	
+	public int getNoticeCount() {
+		int count = 0;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "select count(NUM) as count from notice where flag = 'Y'";
+			conn = ConnectionProvider.getConnection();
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt("count");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcUtil.close(psmt);
+			jdbcUtil.close(conn);
+			jdbcUtil.close(rs);
+		}
+		return count;
+	}
+
+
+	public notice getNoticeDetail(String num) {	//세부 공지사항
+		notice nt = null;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "select * from notice where num = ?";
+			conn = ConnectionProvider.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, num);
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				String db_num = rs.getString("NUM");
+				String title = rs.getString("TITLE");
+				String content = rs.getString("CONTENT");
+				Date regdate = rs.getTimestamp("REGDATE");
+				String nickname = rs.getString("NICKNAME");
+				String tag = rs.getString("TAG");
+				nt = new notice(Integer.parseInt(db_num), title, content, regdate, nickname, tag);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcUtil.close(rs);
+			jdbcUtil.close(psmt);
+			jdbcUtil.close(conn);
+		}
+
+		return nt;
+	}
+
+
+
+	
 }
