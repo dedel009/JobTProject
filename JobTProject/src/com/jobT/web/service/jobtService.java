@@ -572,7 +572,9 @@ public class jobtService {
 		return nt;
 	}
 
-
+	//통합검색
+	
+	
 
 	
 }

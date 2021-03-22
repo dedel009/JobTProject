@@ -59,7 +59,7 @@ public class boardController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html; charset=UTF-8"); // 한글 깨짐 방지 코드
-
+		String tag = "board";
 		String page_ = req.getParameter("p");
 		String field = req.getParameter("field");
 		String query = req.getParameter("query");
@@ -67,6 +67,9 @@ public class boardController extends HttpServlet {
 
 		List<board> list = jobtService.getInstance().getSearchList(page, field, query);
 		int count = jobtService.getInstance().getSearchCount(page, field, query);
+		List<notice> nlist = jobtService.getInstance().getBoardNoticeList(tag);
+		
+		req.setAttribute("nlist", nlist);
 		req.setAttribute("count", count);
 		req.setAttribute("field", field);
 		req.setAttribute("query", query);
