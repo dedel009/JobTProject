@@ -29,10 +29,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-								      	<c:forEach var="list" items="${list}">
+							      		<c:forEach var="list" items="${list}">
 											<tr>
-												<td>📌공지</td>
-												<td><a href="noticeDetail?num=${list.num}">${list.title }</a></td>
+												<td>${list.num}</td>
+												<c:if test="${list.tag=='board'}">
+													<td><a href="detail?num=${list.num}">${list.title }</a></td>		
+												</c:if>
+												<c:if test="${list.tag=='notice'}">
+													<td><a href="noticeDetail?num=${list.num}">${list.title }</a></td>
+												</c:if>
 												<td>${list.regdate }</td>
 												<td>${list.nickname }</td>
 											</tr>
@@ -40,11 +45,7 @@
                                     </tbody>
                                 </table>
 	                            <div style="width:100%; text-align: center;">
-	                            	<form action="?p=${empty param.p?1:param.p}" method="post">
-		                            	<select name="field" style="height:30px;">
-		                            		<option ${(param.field=="title")?"selected":""} value="title">제목</option>
-		                            		<option ${(param.field=="nickname")?"selected":""} value="nickname">닉네임</option>
-		                            	</select>
+	                            	<form action="?p=${empty param.p?1:param.p}">
 		                            	<input type="text" name="query" value="${param.query}" />
 		                            	<input type="submit" value="검색">
 	                            	</form>
@@ -71,7 +72,7 @@
 									<c:forEach var="page" begin="0" end="4">
 										<c:if test="${page<lastNum}">
 											<div style="float:left; margin:0px 10px 0px 10px;">
-												<a href="?p=${startNum+page}&query=${param.query}&field=${param.field}" class="page_a">${startNum+page }</a>
+												<a href="?p=${startNum+page}&query=${param.query}" class="page_a">${startNum+page }</a>
 											</div>
 										</c:if>
 									</c:forEach>

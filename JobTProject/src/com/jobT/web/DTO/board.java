@@ -8,6 +8,7 @@ public class board {
 	private String content;
 	private Date regdate;
 	private String nickname;
+	private String tag;
 	private boolean flag;
 	
 	public board() {
@@ -15,14 +16,23 @@ public class board {
 	}
 	
 	public board(int num, String title, String content, Date regdate, String nickname) {
-
 		this.num = num;
 		this.title = title;
 		this.content = content;
 		this.regdate = regdate;
 		this.nickname = nickname;
-
 	}
+	
+	public board(int num, String title, String content, Date regdate, String nickname, String tag) {
+		this.num = num;
+		this.title = title;
+		this.content = content;
+		this.regdate = regdate;
+		this.nickname = nickname;
+		this.tag = tag;
+	}
+	
+	
 	public board(int num, String title, String content, Date regdate, String nickname, boolean flag) {
 
 		this.num = num;
@@ -67,6 +77,13 @@ public class board {
 	}
 	public void setFlag(boolean flag) {
 		this.flag = flag;
+	}
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
 	}
 	
 }

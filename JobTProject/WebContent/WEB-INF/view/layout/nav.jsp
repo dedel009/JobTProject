@@ -37,29 +37,34 @@
 <body>
 	<c:if test="${sessionScope.id == null }">
 	  <!-- Navigation -->
-	  <nav class="navbar navbar-light static-top">
-	    <div class="container">
-          <a href="main" class="main_logo"><img src="/JobTProject/img/logo.png" alt="" style="width:180px;"></a>
-          <div>      
-	      	  <a class="navbar-brand" href="board">자유게시판</a>
-		      <a class="btn btn-primary" href="user/login">로그인</a>
-		      <a class="btn btn-primary" href="user/signup">회원가입</a>
-	      </div>
-	    </div>
-	  </nav>
+		<nav class="navbar navbar-light static-top">
+			<div class="container">
+				<a href="main" class="main_logo"><img
+					src="/JobTProject/img/logo.png" alt="" style="width: 180px;"></a>
+				<div>
+					<a class="navbar-brand" href="content/imageBoard">이미지게시판</a>
+					<a class="navbar-brand" href="notice">공지사항</a> <a
+						class="navbar-brand" href="board">자유게시판</a> <a
+						class="btn btn-primary" href="user/login">로그인</a> <a
+						class="btn btn-primary" href="user/signup">회원가입</a>
+				</div>
+			</div>
+		</nav>
 	</c:if>
 	
 	<c:if test="${sessionScope.id != null }">
-	<nav class="navbar navbar-light static-top">
-	    <div class="container">
-          <a href="main"><img src="/JobTProject/img/logo.png" alt="" style="width:180px;"></a>
-          <div>
-  	      	  <a class="navbar-brand" href="#">공지사항</a> 
-	      	  <a class="navbar-brand" href="board">자유게시판</a>
-		      <a class="btn btn-primary" href="user/logout">로그아웃</a>
-	      </div>
-	    </div>
-	  </nav>       
+		<nav class="navbar navbar-light static-top">
+			<div class="container">
+				<a href="main"><img src="/JobTProject/img/logo.png" alt=""
+					style="width: 180px;" class="main_logo"></a>
+				<div>
+					<a class="navbar-brand" href="content/imageBoard">이미지게시판</a>
+					<a class="navbar-brand" href="#">공지사항</a> <a class="navbar-brand"
+						href="board">자유게시판</a> <a class="btn btn-primary"
+						href="user/logout">로그아웃</a>
+				</div>
+			</div>
+		</nav>     
 	</c:if>
 	<script type="text/javascript">
 	window.onload = function(){

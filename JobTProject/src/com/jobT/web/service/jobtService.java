@@ -383,13 +383,12 @@ public class jobtService {
 		return list;
 	}
 
-	public int getSearchCount(int page, String field, String query) {
+	public int getSearchCount(String field, String query) {
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		int count = 0;
-		int start = 1 + (page - 1) * 7; 
-		int end = page * 7; 
+
 		
 		String sql="";
 		//닉네임 으로 검색
@@ -573,8 +572,86 @@ public class jobtService {
 	}
 
 	//통합검색
-	
-	
+	public List<board> getTotalSearch(int page, String query) {
+		List<board> list = new ArrayList<board>();
 
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		int start = 1 + (page - 1) * 7; //0 7 14 
+		int end = page * 7; // 5 10 15 20 .....
+		
+		try {
+			
+			String sql = " select ns.*"
+					+ "                from (select @rownum:=@rownum+1 as seq , n.*"
+					+ "                   from(select @rownum:=0)tmp,"
+					+ "                       (select num,title,content,regdate,nickname,tag "
+					+ "                                from board where title like ? union "
+					+ "                        select num,title,content,regdate,nickname,tag "
+					+ "                                 from notice where title like ? order by REGDATE)n)ns "
+					+ "                     Where seq between ? and ?";
+			
+			conn = ConnectionProvider.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, "%"+query+"%");
+			psmt.setString(2, "%"+query+"%");
+			psmt.setInt(3, start);
+			psmt.setInt(4, end);
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				int num = rs.getInt("NUM");
+				String title = rs.getString("TITLE");
+				String content = rs.getString("CONTENT");
+				Date regdate = rs.getTimestamp("REGDATE");
+				String nickname = rs.getString("NICKNAME");
+				String tag= rs.getString("TAG");
+				
+				board board = new board(num, title, content, regdate, nickname, tag);
+				list.add(board);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcUtil.close(rs);
+			jdbcUtil.close(psmt);
+			jdbcUtil.close(conn);
+		}
+		return list;
+	}
+
+
+	public int getTotalSearchCount(String query) {
+		int count = 0;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			String sql  = "     select count(seq) as count"
+						+ "                from (select @rownum:=@rownum+1 as seq , n.*"
+						+ "                   from(select @rownum:=0)tmp,"
+						+ "                       (select num,title,content,regdate,nickname,tag "
+						+ "                             from board where title like ? union "
+						+ "                         select num,title,content,regdate,nickname,tag "
+						+ "                              from notice where title like ? order by REGDATE)n)ns ";
+			conn = ConnectionProvider.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, "%"+query+"%");
+			psmt.setString(2, "%"+query+"%");
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt("count");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcUtil.close(psmt);
+			jdbcUtil.close(conn);
+			jdbcUtil.close(rs);
+		}
+		return count;
+	}
 	
 }

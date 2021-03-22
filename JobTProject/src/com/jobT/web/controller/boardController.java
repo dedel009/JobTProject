@@ -37,11 +37,11 @@ public class boardController extends HttpServlet {
 		
 		if (query != null && !query.equals("")) { //검색값이 있고 페이지 클릭했을 때
 			 list = jobtService.getInstance().getSearchList(page, field, query);
-			 count = jobtService.getInstance().getSearchCount(page, field, query);			
+			 count = jobtService.getInstance().getSearchCount(field, query);			
 		}else { //검색값 공백 페이지 클릭
 			if (field != null && !field.equals("")) {
 				 list = jobtService.getInstance().getSearchList(page, field, query);
-				 count = jobtService.getInstance().getSearchCount(page, field, query);
+				 count = jobtService.getInstance().getSearchCount(field, query);
 			}else {
 				list = jobtService.getInstance().getList(page);
 				count = jobtService.getInstance().getCount();
@@ -59,14 +59,14 @@ public class boardController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html; charset=UTF-8"); // 한글 깨짐 방지 코드
-		String tag = "board";
+		String tag = "notice";
 		String page_ = req.getParameter("p");
 		String field = req.getParameter("field");
 		String query = req.getParameter("query");
 		int page = Integer.parseInt(page_);
 
 		List<board> list = jobtService.getInstance().getSearchList(page, field, query);
-		int count = jobtService.getInstance().getSearchCount(page, field, query);
+		int count = jobtService.getInstance().getSearchCount(field, query);
 		List<notice> nlist = jobtService.getInstance().getBoardNoticeList(tag);
 		
 		req.setAttribute("nlist", nlist);

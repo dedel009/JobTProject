@@ -49,7 +49,7 @@
 		                            	<input type="submit" value="검색">
 	                            	</form>
 	                            </div>
-                                <c:if test="${not empty sessionScope.id}">
+                                <c:if test="${sessionScope.id=='대빵'}">
 									<a href="insert?n=${sessionScope.nickname}" style="border:1px solid gainsboro; color: gray; border-radius: 10px;padding: 10px;">글쓰기</a>	
 								</c:if>
 								<!-- 페이징 처리 -->	
