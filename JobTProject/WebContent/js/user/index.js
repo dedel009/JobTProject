@@ -1,9 +1,4 @@
 window.onload = function() {
-	if (self.name != 'reload') {
-		self.name = 'reload';
-		self.location.reload(true);
-	} else
-		self.name = '';
     $(window).scroll(function() {                
         if($(this).scrollTop()>0){
         

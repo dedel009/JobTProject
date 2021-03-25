@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
+    <%@ page import="java.net.URLEncoder" %>
+<%@ page import="java.security.SecureRandom" %>
+<%@ page import="java.math.BigInteger" %>
+<%@ page import="java.net.URL" %>
+<%@ page import="java.net.HttpURLConnection" %>
+<%@ page import="java.io.BufferedReader" %>
+<%@ page import="java.io.InputStreamReader" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
@@ -46,6 +53,7 @@
                 </div>
                 <a href="signup" style="text-decoration: none; color: green;">회원가입</a>
             </form>
+            <a href="${apiURL}"><img src="/JobTProject/img/Green.PNG" style="width:250px;margin-top:20px;"></a>
         </div>
     </div>
 </body>

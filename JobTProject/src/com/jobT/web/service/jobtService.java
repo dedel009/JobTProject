@@ -23,6 +23,36 @@ public class jobtService {
 	
 	
 	// 회원가입 관련 메소드
+
+	public int createNaverMember(String id, String name, String nickname) {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			String pass  = "1234";
+			String category = "N";
+			String sql = "insert into member(id, password, name, nickname,category) values(?, ?, ?, ?,?)";
+			conn = ConnectionProvider.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, id);
+			psmt.setString(2, pass);
+			psmt.setString(3, name);
+			psmt.setString(4, nickname);
+			psmt.setString(5, category);
+			result = psmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcUtil.close(rs);
+			jdbcUtil.close(psmt);
+			jdbcUtil.close(conn);
+		}
+		return result;
+	}
+	
+	
 	public int createMember(member member) {
 		int result = 0;
 		Connection conn = null;
@@ -653,5 +683,5 @@ public class jobtService {
 		}
 		return count;
 	}
-	
+
 }

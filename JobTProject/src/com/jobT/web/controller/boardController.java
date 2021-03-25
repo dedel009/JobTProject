@@ -26,7 +26,7 @@ public class boardController extends HttpServlet {
 		int count = 0;
 		List<board> list = null;
 		int page = 1;
-		String tag = "board";
+		String tag = "notice";
 		String page_ = req.getParameter("p");
 		String field = req.getParameter("field");
 		String query = req.getParameter("query");

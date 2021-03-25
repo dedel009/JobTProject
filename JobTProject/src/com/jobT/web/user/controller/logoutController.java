@@ -18,6 +18,6 @@ public class logoutController extends HttpServlet{
 		session.invalidate();
 		res.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = res.getWriter();
-		out.println("<script>alert('로그아웃'); history.back(); </script>");
+		out.println("<script>alert('로그아웃'); location.href='/JobTProject/main' </script>");
 	}
 }

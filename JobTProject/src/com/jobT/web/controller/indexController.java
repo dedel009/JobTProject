@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 public class indexController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		
 		req.getRequestDispatcher("/index.jsp").forward(req, res);
 	}
 }
