@@ -9,14 +9,14 @@
 <body>
 <jsp:include page="../view/layout/nav.jsp"/>
  <!-- Begin Page Content -->
-                <div class="container-fluid" style="margin:0 auto;	">
+                <div class="container-fluid" style="margin:20px;">
                     <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
+                    <div class="card shadow mb-4" style="width:1200px; margin:0 auto;">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">수정</h6>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive" style="overflow:none; ">
+                            <div class="table-responsive" style="overflow:inherit; ">
 								<form action="insert" method="post">
 	                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <tr>
@@ -26,7 +26,7 @@
                                         	<td colspan="2"><input type="text" name="title" placeholder="제목을 입력해주세요." style="border:none; width:100%;" required/></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2"><textarea  name="content" placeholder="내용을 입력해주세요." style="border:none; width:100%;" required></textarea></td>
+                                            <td colspan="2"><textarea  name="content" placeholder="내용을 입력해주세요." style="border:none; width:100%; height:400px;" required></textarea></td>
                                         </tr>
 	                                </table>
 	                                <input type="submit" value="글쓰기" style="float:right;">
