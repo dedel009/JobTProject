@@ -69,9 +69,10 @@ public class callbackController extends HttpServlet{
 
 				access_token = (String) jsonObj.get("access_token");  // access_token값을 받는다 
 				refresh_token = (String) jsonObj.get("refresh_token"); // refresh 이거는 토큰 갱신할때 필수라고 함
-
 				
 //				System.out.println("acc_to: " + access_token);
+//				System.out.println("ref_to: "+refresh_token);
+
 				
 				loginInfo li = new loginInfo();   // 회원정보를 받기위해서 Logininfo 라고 컨트롤러를 하나 생성해서 
 				li.doGet(req, res, access_token); //토큰값을 두겟으로 보냄 두겟 생성하면 req, resp 자동으로 받아있는데 거기에 뒤에 access토큰을 추가로 보냄

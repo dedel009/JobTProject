@@ -53,8 +53,14 @@
                 </div>
                 <a href="signup" style="text-decoration: none; color: green;">회원가입</a>
             </form>
-            <a href="${apiURL}"><img src="/JobTProject/img/Green.PNG" style="width:250px;margin-top:20px;"></a>
+            <div style="width:250px; margin: 0 auto;">
+            <a href="${n_apiURL}"><img src="/JobTProject/img/Green.PNG" style="width:250px;margin:20px 0 10px 0;"></a>
+            <a id="custom-login-btn" href="${k_apiURL}">
+				<img src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg" width="250px;" />
+			</a>
+			</div>
         </div>
     </div>
+ 
 </body>
 </html>
