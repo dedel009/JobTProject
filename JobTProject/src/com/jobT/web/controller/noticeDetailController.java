@@ -1,6 +1,7 @@
 package com.jobT.web.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,19 +21,15 @@ public class noticeDetailController extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		HttpSession session = req.getSession(true); // 세션 생성
 		res.setContentType("text/html; charset=UTF-8");
-		
+		String place = req.getParameter("place");
 		String num = req.getParameter("num");
 		session.setAttribute("num", num);
 		
 		notice nt = jobtService.getInstance().getNoticeDetail(num);
 		
+		req.setAttribute("place", place);
 		req.setAttribute("nt", nt);
 		req.getRequestDispatcher("/WEB-INF/view/noticeDetail.jsp").forward(req, res);
 	}
 	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
-
-	}
 }

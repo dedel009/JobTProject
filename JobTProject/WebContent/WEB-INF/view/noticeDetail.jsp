@@ -19,7 +19,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive" style="overflow:inherit;">
-                            	<form action="noticeDetail" method="post">
+                            	<form action="noticeUpdate?place=${place}" method="post">
 	                               	<table class="table table-bordered" id="dataTable" >
 	                                    <tbody>
 	                                    	<tr>
@@ -35,6 +35,7 @@
 											</tr>
 	                                    </tbody>
 	                                </table>
+	<!--                                	<input type="hidden" name="place" value="notice"> -->
 		     						<c:if test="${sessionScope.nickname == nt.nickname}">
 									<div style="float:right">
 										<input type="submit" value="수정" name="cmd"/>
@@ -42,7 +43,7 @@
 									</div>
 									</c:if>
                                 </form>
-							<a href="#" style="border:1px solid gainsboro; color: gray; border-radius: 10px;padding: 10px;" onclick="history.back();">목록으로</a>
+							<a href="#" style="border:1px solid gainsboro; color: gray; border-radius: 10px;padding: 10px;" onclick="location.href='notice'">목록으로</a>
                             </div>
                         </div>
                     </div>

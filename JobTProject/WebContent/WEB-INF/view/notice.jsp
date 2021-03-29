@@ -33,7 +33,7 @@
 								      	<c:forEach var="list" items="${list}">
 											<tr>
 												<td>📌공지</td>
-												<td><a href="noticeDetail?num=${list.num}">${list.title }</a></td>
+												<td><a href="noticeDetail?num=${list.num}&place=notice">${list.title }</a></td>
 												<td><fmt:formatDate pattern="yyyy.MM.dd hh:mm" value="${list.regdate}"/></td>
 												<td>${list.nickname }</td>
 											</tr>

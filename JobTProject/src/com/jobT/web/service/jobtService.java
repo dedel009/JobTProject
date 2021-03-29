@@ -129,6 +129,28 @@ public class jobtService {
 		}
 		return result;
 	}
+	public int detailNoticeUpdate(String title, String content, String num) {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		try {
+			String sql = "update notice set title=?, content=? where num = ?";
+			conn = ConnectionProvider.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, title);
+			psmt.setString(2, content);
+			psmt.setString(3, num);
+
+			result = psmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcUtil.close(psmt);
+			jdbcUtil.close(conn);
+		}
+		return result;
+	}
 
 	// delete 관련 메소드
 	public int detailDelete(String num) {
@@ -137,6 +159,25 @@ public class jobtService {
 		PreparedStatement psmt = null;
 		try {
 			String sql = "update board set flag = 'F' where num = ?";
+			conn = ConnectionProvider.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, num);
+			result = psmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcUtil.close(psmt);
+			jdbcUtil.close(conn);
+		}
+		return result;
+	}
+	public int detailNoticeDelete(String num) {
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		try {
+			String sql = "update notice set flag = 'F' where num = ?";
 			conn = ConnectionProvider.getConnection();
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, num);
