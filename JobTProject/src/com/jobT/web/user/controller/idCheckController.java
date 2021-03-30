@@ -22,12 +22,16 @@ public class idCheckController extends HttpServlet {
 		String id = req.getParameter("id");
 		String password = req.getParameter("password");
 		String passcheck = req.getParameter("passwordcheck");
+		String name = req.getParameter("name");
+		String nickname = req.getParameter("nickname");
 //		System.out.println("id: " + id);
 //		System.out.println("password"+password);
 //		System.out.println("passwordcheck"+passcheck);
 		jobtService js = jobtService.getInstance();
 		int result_idCheck = js.idCheck(id);
 		
+		req.setAttribute("name", name);
+		req.setAttribute("nickname", nickname);
 		req.setAttribute("idCheck", result_idCheck);
 		req.setAttribute("id", id);
 		req.setAttribute("password", password);

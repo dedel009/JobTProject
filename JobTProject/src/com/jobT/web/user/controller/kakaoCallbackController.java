@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -43,14 +44,14 @@ public class kakaoCallbackController extends HttpServlet {
 
 		String access_token = ""; // 회원정보 받기 위해서는 access_token값을 받을 필요가 있음
 //		String refresh_token = "";
-		System.out.println("apiURL=" + apiURL);
+//		System.out.println("apiURL=" + apiURL);
 		try {
 			URL url = new URL(apiURL);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			con.setRequestMethod("GET");
 			int responseCode = con.getResponseCode();
 			BufferedReader br;
-			System.out.print("responseCode=" + responseCode);
+//			System.out.print("responseCode=" + responseCode);
 			if (responseCode == 200) { // 정상 호출
 				br = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			} else { // 에러 발생
@@ -64,45 +65,51 @@ public class kakaoCallbackController extends HttpServlet {
 			br.close();
 
 			if (responseCode == 200) {
-				System.out.println(res1.toString());
+//				System.out.println(res1.toString());
 				JSONParser parsing = new JSONParser(); //
 				Object obj = parsing.parse(res1.toString()); //
 				JSONObject jsonObj = (JSONObject) obj; // 제이슨 오브젝트에서 access_token 꺼내기 위한 작업(어떻게 했었는지 잘 기억이 안남;)
 
 				access_token = (String) jsonObj.get("access_token"); // access_token값을 받는다
 
-				System.out.println("acc_to: " + access_token);
+//				System.out.println("acc_to: " + access_token);
 
-				String header = "Bearer " + access_token; // Bearer 다음에 공백 추가
+				if(access_token!=null&&!access_token.equals("")) {
+					String header = "Bearer " + access_token; // Bearer 다음에 공백 추가
 
-				String acc_apiURL = "https://kapi.kakao.com/v2/user/me";
+					String acc_apiURL = "https://kapi.kakao.com/v2/user/me";
 
-				Map<String, String> requestHeaders = new HashMap<>();
-				requestHeaders.put("Authorization", header);
-				String responseBody = get(acc_apiURL, requestHeaders); // 이게 회원 정보를 한줄로 받아오는놈
+					Map<String, String> requestHeaders = new HashMap<>();
+					requestHeaders.put("Authorization", header);
+					String responseBody = get(acc_apiURL, requestHeaders); // 이게 회원 정보를 한줄로 받아오는놈
 
-				System.out.println("respon: " + responseBody);
+//					System.out.println("respon: " + responseBody);
 
-				Object res_obj = parsing.parse(responseBody);
-				JSONObject res_jsonObj = (JSONObject) res_obj;
-				String id = res_jsonObj.get("id").toString();
-				System.out.println(id);
-				JSONObject propert =  (JSONObject) res_jsonObj.get("properties");
-				String name = propert.get("nickname").toString();
-				JSONObject kakao_acc = (JSONObject) res_jsonObj.get("kakao_account");
-				JSONObject profile = (JSONObject) kakao_acc.get("profile");
-				String nickname = profile.get("nickname").toString();
+					Object res_obj = parsing.parse(responseBody);
+					JSONObject res_jsonObj = (JSONObject) res_obj;
+					String id = res_jsonObj.get("id").toString();
+					JSONObject propert =  (JSONObject) res_jsonObj.get("properties");
+					String name = propert.get("nickname").toString();
+					JSONObject kakao_acc = (JSONObject) res_jsonObj.get("kakao_account");
+					JSONObject profile = (JSONObject) kakao_acc.get("profile");
+					String nickname = profile.get("nickname").toString();
 
-				System.out.println("name: "+name);
-				System.out.println("nickname: "+nickname);
+					
+					//service 
+					int result = jobtService.getInstance().idCheck("k_"+id);
+					int kakao_login = 0;
 
-				
-				//service 
-//				int result = jobtService.getInstance().in
-				
-				res.sendRedirect("main");
+					if(result == 0) {	//네이버  아이디가 db에 없을 때
+						kakao_login = jobtService.getInstance().createNaverMember("k_"+id,name,nickname);
+					}
+					signUpController suc = new signUpController();
+					req.setAttribute("name", name);
+					req.setAttribute("nickname", nickname);
+					suc.doGet(req, res);
+				}else {
+					res.sendRedirect("main");
+				}
 			}
-
 		} catch (Exception e) {
 			System.out.println(e);
 		}

@@ -72,7 +72,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td><div class="div"><input type="text" class="name" name="name" maxlength="10" placeholder="이름" required></div></td>
+					<td><div class="div"><input type="text" class="name" name="name" maxlength="10" value="${name}" placeholder="이름" required></div></td>
 				</tr>
 				<tr>
 					<td>
@@ -80,7 +80,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td><div class="div"><input type="text" class="nickname" name="nickname" maxlength="20" placeholder="닉네임" required></div></td>
+					<td><div class="div"><input type="text" class="nickname" name="nickname" maxlength="20" value="${nickname}" placeholder="닉네임" required></div></td>
 				</tr>
 				<tr>
 					<td>
@@ -91,7 +91,8 @@
 			</div>
 			<input type="submit" value="가입" style="width:30%;"/>
 		</form>
+		<p style="color:red;">${message}</p>
 	</div>
-	<script type="text/javascript" src="../js/user/signUp.js"></script>
+	<script type="text/javascript" src="${root}/js/user/signUp.js?ver=1"></script>
 </body>
 </html>

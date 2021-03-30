@@ -10,6 +10,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -59,17 +61,18 @@ public class loginInfo extends HttpServlet{
 			
 			int result = jobtService.getInstance().idCheck("n_"+id);
 			int naver_login = 0;
-			HttpSession session = req.getSession(true);	//세션 생성
 			if(result == 0) {	//네이버  아이디가 db에 없을 때
 				naver_login = jobtService.getInstance().createNaverMember("n_"+id,name,nickname);
 			}
-			session.setAttribute("id", id);	//세션에 id 값 저장
-			session.setAttribute("nickname", nickname);
+			
+			signUpController suc = new signUpController();
+			req.setAttribute("name", name);
+			req.setAttribute("nickname", nickname);
+			suc.doGet(req, res);
+
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
-		res.sendRedirect("main");
 	}
 
     private static String get(String apiUrl, Map<String, String> requestHeaders){

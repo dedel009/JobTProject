@@ -18,7 +18,23 @@ import com.jobT.web.service.jobtService;
 public class signUpController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-	
+		req.setCharacterEncoding("UTF-8");
+		res.setContentType("text/html; charset=UTF-8");		//한글 깨짐 방지 코드
+		String name = (String) req.getAttribute("name");
+		String nickname = (String) req.getAttribute("nickname");
+		String message ="";
+		if(name==null) {
+			message = "회원가입을 진행해주세요!";
+		}else {
+			message = "회원가입을 마저 진행해주세요!";
+		}
+
+//		System.out.println("name: "+name);
+//		System.out.println("nickname: "+nickname);
+		req.setAttribute("message", message);
+		req.setAttribute("name", name);
+		req.setAttribute("nickname", nickname);
+
 		req.getRequestDispatcher("/WEB-INF/view/user/signUp.jsp").forward(req, res);
 	}
 	

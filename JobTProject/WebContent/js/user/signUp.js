@@ -25,7 +25,7 @@ function idSubmit() {
         
     }else{
         const form = document.querySelector(".form");
-        form.action = "idCheck";
+        form.action = "/JobTProject/user/idCheck";
         form.submit();
     }
 }
