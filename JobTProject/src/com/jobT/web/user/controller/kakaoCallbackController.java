@@ -96,12 +96,6 @@ public class kakaoCallbackController extends HttpServlet {
 
 					
 					//service 
-					int result = jobtService.getInstance().idCheck("k_"+id);
-					int kakao_login = 0;
-
-					if(result == 0) {	//네이버  아이디가 db에 없을 때
-						kakao_login = jobtService.getInstance().createNaverMember("k_"+id,name,nickname);
-					}
 					signUpController suc = new signUpController();
 					req.setAttribute("name", name);
 					req.setAttribute("nickname", nickname);
