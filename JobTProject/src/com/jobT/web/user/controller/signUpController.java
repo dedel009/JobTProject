@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.jobT.web.DTO.member;
 import com.jobT.web.service.jobtService;
@@ -31,11 +32,12 @@ public class signUpController extends HttpServlet{
 		String nickname = req.getParameter("nickname");
 		String name = req.getParameter("name");
 		
-		jobtService js = jobtService.getInstance();
 		member member = new member(id, password, nickname, name);
-		int result = js.createMember(member);
-
-		System.out.println("result: "+result);
+		int result = jobtService.getInstance().createMember(member);
+		HttpSession session = req.getSession(true);	//세션 생성
+		session.setAttribute("id", id);	//세션에 id 값 저장
+		session.setAttribute("nickname", nickname);
+//		System.out.println("result: "+result);
 		out.println("<script>alert('회원가입 성공!'); location.href='/JobTProject/main';</script>");
 		
 	}

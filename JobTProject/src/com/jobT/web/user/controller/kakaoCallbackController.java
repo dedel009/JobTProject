@@ -21,6 +21,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.jobT.web.service.jobtService;
+
 @WebServlet("/kakaoCallback")
 public class kakaoCallbackController extends HttpServlet {
 	@Override
@@ -68,13 +70,9 @@ public class kakaoCallbackController extends HttpServlet {
 				JSONObject jsonObj = (JSONObject) obj; // 제이슨 오브젝트에서 access_token 꺼내기 위한 작업(어떻게 했었는지 잘 기억이 안남;)
 
 				access_token = (String) jsonObj.get("access_token"); // access_token값을 받는다
-//				refresh_token = (String) jsonObj.get("refresh_token"); // refresh 이거는 토큰 갱신할때 필수라고 함
 
 				System.out.println("acc_to: " + access_token);
-//				System.out.println("ref_to: "+refresh_token);
 
-//				kakaoLoginInfo li = new kakaoLoginInfo();   // 회원정보를 받기위해서 Logininfo 라고 컨트롤러를 하나 생성해서 
-//				li.doGet(req, res, access_token); //토큰값을 두겟으로 보냄 두겟 생성하면 req, resp 자동으로 받아있는데 거기에 뒤에 access토큰을 추가로 보냄
 				String header = "Bearer " + access_token; // Bearer 다음에 공백 추가
 
 				String acc_apiURL = "https://kapi.kakao.com/v2/user/me";
@@ -89,13 +87,19 @@ public class kakaoCallbackController extends HttpServlet {
 				JSONObject res_jsonObj = (JSONObject) res_obj;
 				String id = res_jsonObj.get("id").toString();
 				System.out.println(id);
-				Object properties = res_jsonObj.get("properties");
-				JSONObject propert = (JSONObject) properties;
+				JSONObject propert =  (JSONObject) res_jsonObj.get("properties");
 				String name = propert.get("nickname").toString();
+				JSONObject kakao_acc = (JSONObject) res_jsonObj.get("kakao_account");
+				JSONObject profile = (JSONObject) kakao_acc.get("profile");
+				String nickname = profile.get("nickname").toString();
 
 				System.out.println("name: "+name);
+				System.out.println("nickname: "+nickname);
 
-
+				
+				//service 
+//				int result = jobtService.getInstance().in
+				
 				res.sendRedirect("main");
 			}
 

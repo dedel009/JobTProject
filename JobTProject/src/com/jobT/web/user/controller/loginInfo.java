@@ -57,11 +57,11 @@ public class loginInfo extends HttpServlet{
 //			System.out.println(name);
 //			System.out.println(id);
 			
-			int result = jobtService.getInstance().idCheck(id);
+			int result = jobtService.getInstance().idCheck("n_"+id);
 			int naver_login = 0;
 			HttpSession session = req.getSession(true);	//세션 생성
 			if(result == 0) {	//네이버  아이디가 db에 없을 때
-				naver_login = jobtService.getInstance().createNaverMember(id,name,nickname);
+				naver_login = jobtService.getInstance().createNaverMember("n_"+id,name,nickname);
 			}
 			session.setAttribute("id", id);	//세션에 id 값 저장
 			session.setAttribute("nickname", nickname);

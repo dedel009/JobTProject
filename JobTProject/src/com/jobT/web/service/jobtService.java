@@ -32,7 +32,7 @@ public class jobtService {
 		try {
 			String pass  = "1234";
 			String category = "N";
-			String sql = "insert into member(id, password, name, nickname,category) values(?, ?, ?, ?,?)";
+			String sql = "insert into member(id, password, name, nickname,category) values(?, ?, ?, ?, ?)";
 			conn = ConnectionProvider.getConnection();
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, id);
