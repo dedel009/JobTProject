@@ -8,18 +8,21 @@ public class member {
 	private String name;
 	private String nickname;
 	private Date regdate;
+	private String category;
 	private boolean flag;
 	
 	
 	public member() {
 		
 	}
-	
-	public member(String id, String password, String nickname, String name) {
+
+
+	public member(String id, String password, String nickname, String name, String category) {
 		this.id = id;
 		this.password = password;
 		this.nickname = nickname;
 		this.name = name;
+		this.category = category;
 	}
 	
 	public member(String id, String password, String name, String nickname, Date regdate, boolean flag) {
@@ -30,6 +33,8 @@ public class member {
 		this.regdate = regdate;
 		this.flag = flag;
 	}
+	
+	
 	
 	public String getId() {
 		return id;
@@ -68,5 +73,11 @@ public class member {
 		this.flag = flag;
 	}
 	
-	
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
 }

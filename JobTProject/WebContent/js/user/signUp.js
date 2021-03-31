@@ -49,6 +49,7 @@ function passSubmit() {
     } 
 }
 
+
 function passwordCheck() {
     const var1 = document.querySelector(".password").value;
     const var2 = document.querySelector(".passwordcheck").value;
@@ -81,8 +82,27 @@ function nameCheck(){
 function nicknameCheck(){
     const var1 = document.querySelector(".nickname").value;
     if(var1==null || var1==""){
+        document.querySelector(".p5").style.display = "none";          	
         document.querySelector(".nono5").style.display = "block";
+       
     }else{
-        document.querySelector(".nono5").style.display = "none";  
+        const form = document.querySelector(".form");
+        form.action = "/JobTProject/user/nicknameCheck";
+        form.submit();
+    }
+}
+
+function pass(){
+    const var1 = document.querySelector(".password").value;
+    const var2 = document.querySelector(".passwordcheck").value;
+    
+    if(((var1 != null) && (var1 !="")) && ((var2 != null) && (var2 !=""))){
+	    if(var1 == var2){
+	        const form = document.querySelector(".form");   
+	        form.action = "/JobTProject/user/signup";
+	        form.submit();	
+	    }else{
+	    	alert('비밀번호가 일치하지 않습니다!');
+	    }
     }
 }

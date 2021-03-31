@@ -47,8 +47,12 @@ public class signUpController extends HttpServlet{
 		String password = req.getParameter("password");
 		String nickname = req.getParameter("nickname");
 		String name = req.getParameter("name");
+		String category = "J";
+		if(!req.getParameter("category").equals("")&&req.getParameter("category")!=null) {
+			category = req.getParameter("category");
+		}
 		
-		member member = new member(id, password, nickname, name);
+		member member = new member(id, password, nickname, name, category);
 		int result = jobtService.getInstance().createMember(member);
 		HttpSession session = req.getSession(true);	//세션 생성
 		session.setAttribute("id", id);	//세션에 id 값 저장

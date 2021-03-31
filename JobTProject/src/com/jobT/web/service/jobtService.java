@@ -59,13 +59,14 @@ public class jobtService {
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		try {
-			String sql = "insert into member(id, password, name, nickname) values(?, ?, ?, ?)";
+			String sql = "insert into member(id, password, name, nickname, category) values(?, ?, ?, ?, ?)";
 			conn = ConnectionProvider.getConnection();
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, member.getId());
 			psmt.setString(2, member.getPassword());
 			psmt.setString(3, member.getName());
 			psmt.setString(4, member.getNickname());
+			psmt.setString(5, member.getCategory());
 			result = psmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -78,7 +79,60 @@ public class jobtService {
 		return result;
 	
 	}
+	public int memberCheck(String nickname, String category) { // id 중복체크
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+
+			String sql = "select count(id) as count from member where nickname=? and category = ?";
+			conn = ConnectionProvider.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, nickname);
+			psmt.setString(2, category);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				String count = rs.getString("count");
+				result = Integer.parseInt(count);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcUtil.close(rs);
+			jdbcUtil.close(psmt);
+			jdbcUtil.close(conn);
+		}
+		return result;
+	}
 	
+	public int nicknameCheck(String nickname) { // id 중복체크
+		int result = 0;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+
+			String sql = "select count(id) as count from member where nickname=?";
+			conn = ConnectionProvider.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, nickname);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				String count = rs.getString("count");
+				result = Integer.parseInt(count);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcUtil.close(rs);
+			jdbcUtil.close(psmt);
+			jdbcUtil.close(conn);
+		}
+		return result;
+	}
 	public int idCheck(String id) { // id 중복체크
 		int result = 0;
 		Connection conn = null;

@@ -65,11 +65,21 @@ public class loginInfo extends HttpServlet{
 //			if(result == 0) {	//네이버  아이디가 db에 없을 때
 //				naver_login = jobtService.getInstance().createNaverMember("n_"+id,name,nickname);
 //			}
-			
-			signUpController suc = new signUpController();
-			req.setAttribute("name", name);
-			req.setAttribute("nickname", nickname);
-			suc.doGet(req, res);
+			String category = "N";
+			int check = jobtService.getInstance().nicknameCheck(nickname);
+			if(check ==0) {
+				signUpController suc = new signUpController();
+				req.setAttribute("name", name);
+				req.setAttribute("nickname", nickname);
+				req.setAttribute("category", category);
+				suc.doGet(req, res);
+			}else {
+				HttpSession session = req.getSession(true);	//세션 생성
+				session.setAttribute("id", id);	//세션에 id 값 저장
+				session.setAttribute("nickname", nickname);
+				res.sendRedirect("main");
+			}
+
 
 		} catch (ParseException e) {
 			e.printStackTrace();

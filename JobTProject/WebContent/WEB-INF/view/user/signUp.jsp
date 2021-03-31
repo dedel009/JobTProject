@@ -84,15 +84,27 @@
 				</tr>
 				<tr>
 					<td>
-						<p class="nono5" style="color:red; margin:0; display: none;">필수 정보입니다.</p>						
+						<c:if test="${nickCheck==1}">
+							<p class="p5 no5" style="color:red; margin:0; ">이미 있는 닉네임입니다.</p>
+						</c:if>	
+						<c:if test="${nickCheck==0}">
+							<p class="p5 yes5" style="color:green; margin:0;">아주 멋진 닉네임이군요.</p>
+						</c:if>	
+						<p class="p5 nono5" style="color:red; margin:0; display: none;">필수 정보입니다.</p>						
 					</td>
 				</tr>
 			</table>
 			</div>
-			<input type="submit" value="가입" style="width:30%;"/>
+			<c:if test="${nickCheck==1 or idCheck==1}">
+				<input type="button" value="가입" style="width:30%;" onclick="alert('아이디나 닉네임을 확인해주세요!');"/>
+			</c:if>
+			<c:if test="${nickCheck!=1 and idCheck!=1 }">
+				<input type="button" value="가입" style="width:30%;" onclick="pass()"/>			
+			</c:if>
+
 		</form>
 		<p style="color:red;">${message}</p>
 	</div>
-	<script type="text/javascript" src="${root}/js/user/signUp.js?ver=1"></script>
+	<script type="text/javascript" src="${root}/js/user/signUp.js?ver=2"></script>
 </body>
 </html>

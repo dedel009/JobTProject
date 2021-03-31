@@ -20,7 +20,6 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import com.jobT.web.service.jobtService;
 
@@ -94,12 +93,22 @@ public class kakaoCallbackController extends HttpServlet {
 					JSONObject profile = (JSONObject) kakao_acc.get("profile");
 					String nickname = profile.get("nickname").toString();
 
-					
 					//service 
-					signUpController suc = new signUpController();
-					req.setAttribute("name", name);
-					req.setAttribute("nickname", nickname);
-					suc.doGet(req, res);
+					String category = "K";
+					int check = jobtService.getInstance().nicknameCheck(nickname);
+					if(check ==0) {
+						signUpController suc = new signUpController();
+						req.setAttribute("name", name);
+						req.setAttribute("nickname", nickname);
+						req.setAttribute("category", category);
+						suc.doGet(req, res);
+					}else {
+						HttpSession session = req.getSession(true);	//세션 생성
+						session.setAttribute("id", id);	//세션에 id 값 저장
+						session.setAttribute("nickname", nickname);
+						res.sendRedirect("main");
+					}
+
 				}else {
 					res.sendRedirect("main");
 				}

@@ -68,9 +68,10 @@ nav {
 						<a class="navbar-brand" href="content/imageBoard">이미지게시판</a> <a
 							class="navbar-brand" href="#" onclick="fnMove('impormation')">설명</a>
 						<a class="navbar-brand" href="#" onclick="fnMove('picture')">그림</a>
-						<a class="navbar-brand" href="notice">공지사항</a> <a class="navbar-brand"
-							href="board">자유게시판</a> <a class="btn btn-primary"
-							href="user/logout">로그아웃</a>
+						<a class="navbar-brand" href="notice">공지사항</a> 
+						<a class="navbar-brand" href="board">자유게시판</a> 
+						<a class="btn btn-primary" href="myInfo">내정보</a> 					
+						<a class="btn btn-primary" href="user/logout">로그아웃</a>
 					</div>
 				</div>
 			</nav>
@@ -110,9 +111,10 @@ nav {
 								<a class="navbar-brand" href="content/imageBoard">이미지게시판</a> <a
 									class="navbar-brand" href="#" onclick="fnMove('impormation')">설명</a>
 								<a class="navbar-brand" href="#" onclick="fnMove('picture')">그림</a>
-								<a class="navbar-brand" href="notice">공지사항</a> <a
-									class="navbar-brand" href="board">자유게시판</a> <a
-									class="btn btn-primary" href="user/logout">로그아웃</a>
+								<a class="navbar-brand" href="notice">공지사항</a> 
+								<a class="navbar-brand" href="board">자유게시판</a> 
+								<a class="btn btn-primary" href="myInfo">내정보</a> 	
+								<a class="btn btn-primary" href="user/logout">로그아웃</a>
 							</div>
 						</div>
 					</nav>

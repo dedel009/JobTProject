@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.jobT.web.service.jobtService;
 
-@WebServlet("/user/idCheck")
-public class idCheckController extends HttpServlet {
+@WebServlet("/user/nicknameCheck")
+public class nicknameCheckController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
@@ -24,14 +24,12 @@ public class idCheckController extends HttpServlet {
 		String passcheck = req.getParameter("passwordcheck");
 		String name = req.getParameter("name");
 		String nickname = req.getParameter("nickname");
-//		System.out.println("id: " + id);
-//		System.out.println("password"+password);
-//		System.out.println("passwordcheck"+passcheck);
-		int result_idCheck = jobtService.getInstance().idCheck(id);
+		
+		int result_nickCheck =  jobtService.getInstance().nicknameCheck(nickname);
 		
 		req.setAttribute("name", name);
 		req.setAttribute("nickname", nickname);
-		req.setAttribute("idCheck", result_idCheck);
+		req.setAttribute("nickCheck", result_nickCheck);
 		req.setAttribute("id", id);
 		req.setAttribute("password", password);
 		req.setAttribute("passwordcheck", passcheck);
