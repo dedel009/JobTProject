@@ -364,88 +364,88 @@ public class jobtService {
 		return -2; // db오류
 	}
 
-	// board관련 메소드
-	public List<board> getList(int page) {
-		List<board> list = new ArrayList<board>();
-
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-
-		int start = 1 + (page - 1) * 7; //0 7 14 
-		int end = page * 7; // 5 10 15 20 .....
-		
-		try {
-//			 String sql ="	Select * "
-//			 			+ "		from (Select @rownum:=@rownum+1 as seq , n.* "
-//			 			+ "			from(select * from board where flag='Y' order by regdate desc)n "
-//			 			+ "		        Where (@rownum:=0)=0)ns "
-//			 			+ "                Where ns.seq between 1 and 10";
-			
-//			String sql  = "	select * "
-//						+ "				 from (select (@rownum := @rownum + 1)seq, board.* "
-//						+ "					 from(select * from board "
-//						+ "						   where flag='Y'"
-//						+ "						   order by regdate desc)board)rnum,"
-//						+ "                           (select @rownum := 0)tmp"
-//						+ "							 limit ?, 7";
-			
-			String sql = "select ns.*"
-							+ "				 from (select @rownum:=@rownum+1 as seq , n.*"
-							+ "						 from(select @rownum:=0)tmp,"
-							+ "                         (select * "
-							+ "						From board "
-							+ "						   where flag='Y' "
-							+ "					   order by regdate desc)n)ns "
-							+ "				Where ns.seq between ? and ?";
-			
-			conn = ConnectionProvider.getConnection();
-			psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, start);
-			psmt.setInt(2, end);
-			rs = psmt.executeQuery();
-			while (rs.next()) {
-				int num = rs.getInt("NUM");
-				String title = rs.getString("TITLE");
-				String content = rs.getString("CONTENT");
-				Date regdate = rs.getTimestamp("REGDATE");
-				String nickname = rs.getString("NICKNAME");
-
-				board board = new board(num, title, content, regdate, nickname);
-				list.add(board);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			jdbcUtil.close(rs);
-			jdbcUtil.close(psmt);
-			jdbcUtil.close(conn);
-		}
-		return list;
-	}
-	public int getCount() {
-		int count = 0;
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-		try {
-			String sql = "select count(NUM) as count from board where flag = 'Y'";
-			conn = ConnectionProvider.getConnection();
-			psmt = conn.prepareStatement(sql);
-			rs = psmt.executeQuery();
-			if(rs.next()) {
-				count = rs.getInt("count");
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			jdbcUtil.close(psmt);
-			jdbcUtil.close(conn);
-			jdbcUtil.close(rs);
-		}
-		return count;
-	}
+//	// board관련 메소드
+//	public List<board> getList(int page) {
+//		List<board> list = new ArrayList<board>();
+//
+//		Connection conn = null;
+//		PreparedStatement psmt = null;
+//		ResultSet rs = null;
+//
+//		int start = 1 + (page - 1) * 7; //0 7 14 
+//		int end = page * 7; // 5 10 15 20 .....
+//		
+//		try {
+////			 String sql ="	Select * "
+////			 			+ "		from (Select @rownum:=@rownum+1 as seq , n.* "
+////			 			+ "			from(select * from board where flag='Y' order by regdate desc)n "
+////			 			+ "		        Where (@rownum:=0)=0)ns "
+////			 			+ "                Where ns.seq between 1 and 10";
+//			
+////			String sql  = "	select * "
+////						+ "				 from (select (@rownum := @rownum + 1)seq, board.* "
+////						+ "					 from(select * from board "
+////						+ "						   where flag='Y'"
+////						+ "						   order by regdate desc)board)rnum,"
+////						+ "                           (select @rownum := 0)tmp"
+////						+ "							 limit ?, 7";
+//			
+//			String sql = "select ns.*"
+//							+ "				 from (select @rownum:=@rownum+1 as seq , n.*"
+//							+ "						 from(select @rownum:=0)tmp,"
+//							+ "                         (select * "
+//							+ "						From board "
+//							+ "						   where flag='Y' "
+//							+ "					   order by regdate desc)n)ns "
+//							+ "				Where ns.seq between ? and ?";
+//			
+//			conn = ConnectionProvider.getConnection();
+//			psmt = conn.prepareStatement(sql);
+//			psmt.setInt(1, start);
+//			psmt.setInt(2, end);
+//			rs = psmt.executeQuery();
+//			while (rs.next()) {
+//				int num = rs.getInt("NUM");
+//				String title = rs.getString("TITLE");
+//				String content = rs.getString("CONTENT");
+//				Date regdate = rs.getTimestamp("REGDATE");
+//				String nickname = rs.getString("NICKNAME");
+//
+//				board board = new board(num, title, content, regdate, nickname);
+//				list.add(board);
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			jdbcUtil.close(rs);
+//			jdbcUtil.close(psmt);
+//			jdbcUtil.close(conn);
+//		}
+//		return list;
+//	}
+//	public int getCount() {
+//		int count = 0;
+//		Connection conn = null;
+//		PreparedStatement psmt = null;
+//		ResultSet rs = null;
+//		try {
+//			String sql = "select count(NUM) as count from board where flag = 'Y'";
+//			conn = ConnectionProvider.getConnection();
+//			psmt = conn.prepareStatement(sql);
+//			rs = psmt.executeQuery();
+//			if(rs.next()) {
+//				count = rs.getInt("count");
+//			}
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			jdbcUtil.close(psmt);
+//			jdbcUtil.close(conn);
+//			jdbcUtil.close(rs);
+//		}
+//		return count;
+//	}
 
 	public List<board> getSearchList(int page, String field, String query) {	//검색했을 때 리스트
 		Connection conn = null;
@@ -592,30 +592,46 @@ public class jobtService {
 	
 	
 	//notice 관련 메소드
-	public List<notice> getNoticeList(int page) {
-		List<notice> list = new ArrayList<notice>();
-
+	public List<notice> getNoticeList(int page, String field, String query) {
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
+		List<notice> list = new ArrayList<notice>();
+		
 
-		int start = 1 + (page - 1) * 7; //0 7 14 
-		int end = page * 7; // 5 10 15 20 .....
+		//paging 번호
+		int start = 1 + (page - 1) * 7; 
+		int end = page * 7; 
+		
+		String sql="";
+		//닉네임 으로 검색
+		if(field.equals("nickname")) {
+			sql 	= "           SELECT rn.* "
+					+ "					FROM(SELECT @rownum:=@rownum+1 as rownum , ex.*"
+					+ "					   FROM(SELECT @rownum:=0)tmp,"
+					+ "                       (SELECT *"
+					+ "					  FROM notice"
+					+ "				    WHERE flag ='Y'"
+					+ "					 and nickname like ?)ex)rn"
+					+ "                     WHERE rn.rownum between ? and ?;";
+		   //TITLE 로 검색
+		}else if (field.equals("title")) {
+				sql    = "           SELECT rn.* "
+						+ "					FROM(SELECT @rownum:=@rownum+1 as rownum , ex.*"
+						+ "					   FROM(SELECT @rownum:=0)tmp,"
+						+ "                       (SELECT *"
+						+ "					  FROM notice"
+						+ "				    WHERE flag ='Y'"
+						+ "					 and title like ?)ex)rn"
+						+ "				WHERE rn.rownum between ? and ?";
+		}
 		
 		try {
-			
-			String sql = "select ns.*"
-							+ "				 from (select @rownum:=@rownum+1 as seq , n.*"
-							+ "						 from(select @rownum:=0)tmp,"
-							+ "                         (select * "
-							+ "						From notice "
-							+ "						   where flag='Y')n)ns "
-							+ "				Where ns.seq between ? and ?";
-			
 			conn = ConnectionProvider.getConnection();
 			psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, start);
-			psmt.setInt(2, end);
+			psmt.setString(1, "%"+query+"%");
+			psmt.setInt(2, start);
+			psmt.setInt(3, end);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				int num = rs.getInt("NUM");
@@ -638,15 +654,38 @@ public class jobtService {
 		return list;
 	}	
 	
-	public int getNoticeCount() {
-		int count = 0;
+	public int getNoticeCount(String field, String query) {
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
+		int count = 0;
+
+		
+		String sql="";
+		//닉네임 으로 검색
+		if(field.equals("nickname")) {
+			sql 	= "           SELECT count(rn.rownum) as count "
+					+ "					FROM(SELECT @rownum:=@rownum+1 as rownum , ex.*"
+					+ "					   FROM(SELECT @rownum:=0)tmp,"
+					+ "                       (SELECT *"
+					+ "					  FROM notice"
+					+ "				    WHERE flag ='Y'"
+					+ "					 and nickname like ?)ex)rn ";
+		   //TITLE 로 검색
+		}else if (field.equals("title")) {
+				sql    = "        SELECT count(rn.rownum) as count "
+						+ "					FROM(SELECT @rownum:=@rownum+1 as rownum , ex.*"
+						+ "					   FROM(SELECT @rownum:=0)tmp,"
+						+ "                       (SELECT *"
+						+ "					  FROM notice"
+						+ "				    WHERE flag ='Y'"
+						+ "					 and title like ?)ex)rn ";
+		}
+		
 		try {
-			String sql = "select count(NUM) as count from notice where flag = 'Y'";
 			conn = ConnectionProvider.getConnection();
 			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, "%"+query+"%");
 			rs = psmt.executeQuery();
 			if(rs.next()) {
 				count = rs.getInt("count");

@@ -43,8 +43,8 @@ public class boardController extends HttpServlet {
 				 list = jobtService.getInstance().getSearchList(page, field, query);
 				 count = jobtService.getInstance().getSearchCount(field, query);
 			}else {
-				list = jobtService.getInstance().getList(page);
-				count = jobtService.getInstance().getCount();
+				 list = jobtService.getInstance().getSearchList(page, "title", "");
+				 count = jobtService.getInstance().getSearchCount("title", "");
 			}
 		}
 		List<notice> nlist = jobtService.getInstance().getBoardNoticeList(tag);
