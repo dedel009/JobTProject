@@ -12,13 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.jobT.web.DTO.imgBoard;
 import com.jobT.web.service.imgContentDAO;
 
-@WebServlet("/content/imageBoard")
+@WebServlet("/imageBoard")
 public class imageBoardController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		List <imgBoard> imgList = imgContentDAO.getInstance().getImgList();
 
 		req.setAttribute("imgList", imgList);
-		req.getRequestDispatcher("/WEB-INF/view/content/imageBoard.jsp").forward(req, res);
+		req.getRequestDispatcher("/WEB-INF/view/imageBoard.jsp").forward(req, res);
 	}
 }

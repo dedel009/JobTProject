@@ -9,13 +9,20 @@ public class member {
 	private String nickname;
 	private Date regdate;
 	private String category;
+	private String email;
 	private boolean flag;
 	
 	
 	public member() {
 		
 	}
-
+	public member(String id, String name, String nickname, Date regdate, String email) {
+		this.id = id;
+		this.nickname = nickname;
+		this.name = name;
+		this.regdate = regdate;
+		this.email = email;
+	}
 
 	public member(String id, String password, String nickname, String name, String category) {
 		this.id = id;
@@ -36,6 +43,12 @@ public class member {
 	
 	
 	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public String getId() {
 		return id;
 	}

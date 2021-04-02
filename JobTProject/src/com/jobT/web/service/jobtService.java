@@ -79,6 +79,41 @@ public class jobtService {
 		return result;
 	
 	}
+
+	//내정보 가져오기
+	public member getMember(String id) {
+		member member = null;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "select * from member where id = ?";
+			conn = ConnectionProvider.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, id);
+
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				String name = rs.getString("NAME");
+				String nickname = rs.getString("NICKNAME");
+				Date regdate = rs.getTimestamp("REGDATE");
+				String email = rs.getString("CEMAIL");
+				
+				member = new member(id, name, nickname, regdate, email);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcUtil.close(rs);
+			jdbcUtil.close(psmt);
+			jdbcUtil.close(conn);
+		}
+
+		return member;
+	}
+	
+	
 	public int memberCheck(String nickname, String category) { // id 중복체크
 		int result = 0;
 		Connection conn = null;
@@ -817,5 +852,6 @@ public class jobtService {
 		}
 		return count;
 	}
+
 
 }
